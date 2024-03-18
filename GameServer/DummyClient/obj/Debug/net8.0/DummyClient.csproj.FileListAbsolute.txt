@@ -1,0 +1,14 @@
+d:\Workspace\Source\CSharp\CSharpLearn\GameServer\DummyClient\bin\Debug\net8.0\DummyClient.exe
+d:\Workspace\Source\CSharp\CSharpLearn\GameServer\DummyClient\bin\Debug\net8.0\DummyClient.deps.json
+d:\Workspace\Source\CSharp\CSharpLearn\GameServer\DummyClient\bin\Debug\net8.0\DummyClient.runtimeconfig.json
+d:\Workspace\Source\CSharp\CSharpLearn\GameServer\DummyClient\bin\Debug\net8.0\DummyClient.dll
+d:\Workspace\Source\CSharp\CSharpLearn\GameServer\DummyClient\bin\Debug\net8.0\DummyClient.pdb
+d:\Workspace\Source\CSharp\CSharpLearn\GameServer\DummyClient\obj\Debug\net8.0\DummyClient.GeneratedMSBuildEditorConfig.editorconfig
+d:\Workspace\Source\CSharp\CSharpLearn\GameServer\DummyClient\obj\Debug\net8.0\DummyClient.AssemblyInfoInputs.cache
+d:\Workspace\Source\CSharp\CSharpLearn\GameServer\DummyClient\obj\Debug\net8.0\DummyClient.AssemblyInfo.cs
+d:\Workspace\Source\CSharp\CSharpLearn\GameServer\DummyClient\obj\Debug\net8.0\DummyClient.csproj.CoreCompileInputs.cache
+d:\Workspace\Source\CSharp\CSharpLearn\GameServer\DummyClient\obj\Debug\net8.0\DummyClient.dll
+d:\Workspace\Source\CSharp\CSharpLearn\GameServer\DummyClient\obj\Debug\net8.0\refint\DummyClient.dll
+d:\Workspace\Source\CSharp\CSharpLearn\GameServer\DummyClient\obj\Debug\net8.0\DummyClient.pdb
+d:\Workspace\Source\CSharp\CSharpLearn\GameServer\DummyClient\obj\Debug\net8.0\DummyClient.genruntimeconfig.cache
+d:\Workspace\Source\CSharp\CSharpLearn\GameServer\DummyClient\obj\Debug\net8.0\ref\DummyClient.dll
