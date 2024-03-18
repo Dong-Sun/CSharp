@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\Server\\Server.csproj": {}
+    "D:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\Server\\Server.csproj": {}
   },
   "projects": {
-    "d:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\Server\\Server.csproj": {
+    "D:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\Server\\Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\Server\\Server.csproj",
+        "projectUniqueName": "D:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\Server\\Server.csproj",
         "projectName": "Server",
-        "projectPath": "d:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\Server\\Server.csproj",
+        "projectPath": "D:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\Server\\Server.csproj",
         "packagesPath": "C:\\Users\\dongsun\\.nuget\\packages\\",
-        "outputPath": "d:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\Server\\obj\\",
+        "outputPath": "D:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\dongsun\\AppData\\Roaming\\NuGet\\NuGet.Config"

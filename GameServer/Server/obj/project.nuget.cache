@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "L5R94g7Cwdk9nd0GYV6g+LQO+frTRO7CBAp4+wrZ5QwvSmARTDcwUp8GT8IZauxth64H6t8DpBBQkGvouCb0WQ==",
+  "dgSpecHash": "tp6LWNgpezkz0Wa0eRguqK5jAtLXXrBTKQk7bKptCXMKMSVr7rIfTFCO4Fvp4nknNEGkf8g0RJ739hXUBkVEOQ==",
   "success": true,
-  "projectFilePath": "d:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\Server\\Server.csproj",
+  "projectFilePath": "D:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\Server\\Server.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

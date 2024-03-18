@@ -12,3 +12,4 @@ d:\Workspace\Source\CSharp\CSharpLearn\GameServer\ServerCore\obj\Debug\net8.0\re
 d:\Workspace\Source\CSharp\CSharpLearn\GameServer\ServerCore\obj\Debug\net8.0\ServerCore.pdb
 d:\Workspace\Source\CSharp\CSharpLearn\GameServer\ServerCore\obj\Debug\net8.0\ServerCore.genruntimeconfig.cache
 d:\Workspace\Source\CSharp\CSharpLearn\GameServer\ServerCore\obj\Debug\net8.0\ref\ServerCore.dll
+d:\Workspace\Source\CSharp\CSharpLearn\GameServer\ServerCore\obj\Debug\net8.0\ServerCore.sourcelink.json
