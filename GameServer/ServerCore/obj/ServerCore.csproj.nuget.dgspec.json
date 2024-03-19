@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\ServerCore\\ServerCore.csproj": {}
+    "D:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\ServerCore\\ServerCore.csproj": {}
   },
   "projects": {
-    "d:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\ServerCore\\ServerCore.csproj": {
+    "D:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\ServerCore\\ServerCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\ServerCore\\ServerCore.csproj",
+        "projectUniqueName": "D:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\ServerCore\\ServerCore.csproj",
         "projectName": "ServerCore",
-        "projectPath": "d:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\ServerCore\\ServerCore.csproj",
+        "projectPath": "D:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\ServerCore\\ServerCore.csproj",
         "packagesPath": "C:\\Users\\dongsun\\.nuget\\packages\\",
-        "outputPath": "d:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\ServerCore\\obj\\",
+        "outputPath": "D:\\Workspace\\Source\\CSharp\\CSharpLearn\\GameServer\\ServerCore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\dongsun\\AppData\\Roaming\\NuGet\\NuGet.Config"
