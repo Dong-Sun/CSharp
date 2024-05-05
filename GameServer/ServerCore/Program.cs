@@ -4,61 +4,42 @@ using System.Threading.Tasks;
 
 namespace ServerCore
 {
-    // 함수 내에서 라인끼리 의존성이 없을 경우 하드웨어가 최적화를 위해 순서를 뒤바꿔서 실행을 함
-    // 싱글 스레드에서는 문제 없지만 멀티 스레드 환경에서는 문제가 생길 우려가 있음
-    // 그렇기에 경계선을 그어 순서가 섞이지 않게끔 관리해줘야 한다
-    
-    // 메모리 베리어
-    // A) 코드 재배치 억제
-    // B) 가시성
-    
-    // 1) Full Memory Barrier (ASM MFENCE, C# Thread.MemoryBarrier) Store/Load 둘다 막는다
-    // 2) Store Memory Barrier (ASM SFENCE) : Store만 막는다
-    // 3) Load Memory Barrier (ASM LFENCE) : Load만 막는다
+    // A) 같은 자원을 두개 이상의 스레드가 동시에 접근하면 여러 문제가 발생할 수 있음
+    // B) 문제들을 막기 위해서는 연산에 원자성과 순서를 보장해 주어야 함
+    // C) Interlocked 키워드를 통해 정수형 연산은 위 규칙을 지킬 수 있음
+    // D) 중간 결과 값을 보고 싶을 때는 새로운 라인에서 변수를 출력하는게 아닌
+    //    반환값을 받아서 출력해야함 (한줄 사이에 값이 바뀔 수 있음)
     class Program
     {
-        private static int x = 0;
-        private static int y = 0;
-        private static int r1 = 0;
-        private static int r2 = 0;
-        
+        private static int number = 0;
         static void Thread_1()
         {
-            y = 1; // Store y
-            
-            // ---------------
-            Thread.MemoryBarrier();
-
-            r1 = x; // Load x
+            for (int i = 0; i < 100000; i++)
+            {
+                // All or Nothing
+                int afterValue = Interlocked.Increment(ref number);
+            }
         }
         
         static void Thread_2()
         {
-            x = 1; // Store x
-            
-            // ---------------
-            Thread.MemoryBarrier();
-
-            r2 = y; // Load y
+            for (int i = 0; i < 100000; i++)
+            {
+                // All or Nothing
+                int afterValue = Interlocked.Decrement(ref number);
+            }
         }
         
         private static void Main(string[] args)
         {
-            int count = 0;
-            while (true)
-            {
-                count++;
-                
-                Task t1 = new Task(Thread_1);
-                Task t2 = new Task(Thread_2);
-                t1.Start();
-                t2.Start();
-
-                Task.WaitAll(t1, t2);
-                if (r1 == 0 && r2 == 0)
-                    break;
-            }
-            Console.WriteLine(count);
+            Task t1 = new Task(Thread_1);
+            Task t2 = new Task(Thread_2);
+            t1.Start();
+            t2.Start();
+            
+            Task.WaitAll(t1, t2);
+            
+            Console.WriteLine(number);
         }
     }
 }
