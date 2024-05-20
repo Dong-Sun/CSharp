@@ -1,47 +1,41 @@
 ﻿namespace ServerCore
 {
-	// 컨텍스트 스위칭(Context Switching) => CPU/코어에서 실행할 프로세스 or 스레드를 교체하는 기술
-	// A) 코어가 다른 스레드로 이동할 때 기존 정보를 저장하고 새로운 정보를 복원하는 과정이 필요
-	// B) 이 과정이 부담이 될수 있어서 스레드를 교체하는게 Spin Lcok보다 무조건 좋다고 보장할 수는 없다.
-	class SpinLock
+	// AutoResetEvent -> 자동문
+	// A) bool으로 입장 가능여부를 확인
+	// B) 입장과 동시에 자동으로 문을 닫기에 원자성을 보장, lcok기능을 대체하기 적합하다
+	// ManualResetEvent -> 수동문
+	// A) 입장과 문을 닫는 행위가 분리되어 있어 lock을 대체하기엔 적합하지 않음
+	// B) 하지만 수동으로 여닫는 특성은 여러 스레드를 한번에 통과시키거나 제한시키는 등에 사용 가능
+	// Mutex
+	// A) AutoResetEvent와 비슷하지만 int를 사용해 몇번을 풀어야 해제될지 정할 수 있음
+	// B) 그리고 Thread ID가 있어서 lock을 해제한 스레드와 잠근 스레드가 다른 애인지 체크 가능
+	// C) 더 많은 기능이 있기에 AutoResetEvent보다 비용이 더 크다
+	class Lock
 	{
-		volatile int _locked = 0;
-
+		// bool <- 커널
+		private ManualResetEvent _available = new ManualResetEvent(true);
 		public void Acquire()
 		{
-			while (true)
-			{
-				// int original = Interlocked.Exchange(ref _locked, 1);
-				// if (original == 0)
-				//	break;
-
-				// CAS Compare-And-Swap
-				int expected = 0;
-				int desired = 1;
-				if (Interlocked.CompareExchange(ref _locked, desired, expected) == expected)
-					break;
-				// Thread.Sleep(1); // 무조건 휴식 => 무조건 1ms 정도 쉰다.
-				// Thread.Sleep(0); // 조건부 양보 => 나보다 우선수위가 낮은 애들한테는 양보 불가 => 우선순위가 나보다 같거나 높은 쓰레드가 없으면 다시 본인한테
-				Thread.Yield(); // 관대한 양보 => 지금 실행이 가능한 쓰레드에 양보 => 실행 가능한 애가 없으면 남은 시간 소진
-			}
+			_available.WaitOne(); // 입장 시도
+			_available.Reset(); // 문을 닫는다
 		}
 		public void Release()
 		{
-			_locked = 0;
+			_available.Set(); // flag = true
 		}
 	}
     class Program
     {
 		static int _num = 0;
-		static SpinLock _lock = new SpinLock();
+		static Mutex _lock = new Mutex();
 
 		static void Thread_1()
 		{
 			for (int i = 0; i < 100000; i++)
 			{
-				_lock.Acquire();
+				_lock.WaitOne();
 				_num++;
-				_lock.Release();
+				_lock.ReleaseMutex();
 			}
 		}
 		
@@ -49,21 +43,21 @@
 		{
 			for (int i = 0; i < 100000; i++)
 			{
-				_lock.Acquire();
+				_lock.WaitOne();
 				_num--;
-				_lock.Release();
+				_lock.ReleaseMutex();
 			}
 		}
-
+		
         private static void Main(string[] args)
         {
 			Task t1 = new Task(Thread_1);
 			Task t2 = new Task(Thread_2);
 			t1.Start();
 			t2.Start();
-
+			
 			Task.WaitAll(t1, t2);
-
+			
 			System.Console.WriteLine(_num);
         }
     }
