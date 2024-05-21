@@ -2,38 +2,29 @@
 
 namespace ServerCore
 {
+    // TLS -> Thread Local Storage -> 각 스레드마다 갖고있는 전역 공간
+    // 특정 부분에 작업량 늘어나게 되면 이를 집중처리 하려고 함
+    // 이때 로직에 lock이 걸려있다면 한번에 하나씩 처리할 수 밖에 없음(lock을 걸고 해제하는 과정에서 싱글스레드보다 안좋아질 수도 있음)
+    // 일감을 한번에 가져와서 작업하는게 해결하는게 효율적일 수도 있다(lock하는 과정이 줄어듬)
     class Program
     {
-        private static volatile int count = 0;
-        private static Lock _lock = new Lock();
+        private static ThreadLocal<string> ThreadName = new ThreadLocal<string>(() => { return $"My Name Is {Thread.CurrentThread.ManagedThreadId}"; });
         
+        static void WhoAmI()
+        {
+            bool repeat = ThreadName.IsValueCreated;
+            if (repeat)
+                Console.WriteLine(ThreadName.Value + "(repeat)");
+            else
+                Console.WriteLine(ThreadName.Value);
+        }
         private static void Main(string[] args)
         {
-            Task t1 = new Task(delegate()
-            {
-                for (int i = 0; i < 100000; i++)
-                {
-                    _lock.WriteLock();
-                    count++;
-                    _lock.WriteUnlock();
-                }
-            });
-            Task t2 = new Task(delegate()
-            {
-                for (int i = 0; i < 100000; i++)
-                {
-                    _lock.WriteLock();
-                    count--;
-                    _lock.WriteUnlock();
-                }
-            });
+            ThreadPool.SetMinThreads(1, 1);
+            ThreadPool.SetMaxThreads(3, 3);
+            Parallel.Invoke(WhoAmI, WhoAmI, WhoAmI, WhoAmI,WhoAmI,WhoAmI,WhoAmI,WhoAmI);
             
-            t1.Start();
-            t2.Start();
-            
-            Task.WaitAll(t1, t2);
-            
-            Console.WriteLine(count);
+            ThreadName.Dispose();
         }
     }
 }
