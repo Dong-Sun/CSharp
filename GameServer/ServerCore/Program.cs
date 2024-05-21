@@ -1,30 +1,60 @@
-﻿using System.Security.Cryptography;
+﻿using System.Net;
+using System.Net.Sockets;
+using System.Text;
 
 namespace ServerCore
 {
-    // TLS -> Thread Local Storage -> 각 스레드마다 갖고있는 전역 공간
-    // 특정 부분에 작업량 늘어나게 되면 이를 집중처리 하려고 함
-    // 이때 로직에 lock이 걸려있다면 한번에 하나씩 처리할 수 밖에 없음(lock을 걸고 해제하는 과정에서 싱글스레드보다 안좋아질 수도 있음)
-    // 일감을 한번에 가져와서 작업하는게 해결하는게 효율적일 수도 있다(lock하는 과정이 줄어듬)
     class Program
     {
-        private static ThreadLocal<string> ThreadName = new ThreadLocal<string>(() => { return $"My Name Is {Thread.CurrentThread.ManagedThreadId}"; });
-        
-        static void WhoAmI()
-        {
-            bool repeat = ThreadName.IsValueCreated;
-            if (repeat)
-                Console.WriteLine(ThreadName.Value + "(repeat)");
-            else
-                Console.WriteLine(ThreadName.Value);
-        }
         private static void Main(string[] args)
         {
-            ThreadPool.SetMinThreads(1, 1);
-            ThreadPool.SetMaxThreads(3, 3);
-            Parallel.Invoke(WhoAmI, WhoAmI, WhoAmI, WhoAmI,WhoAmI,WhoAmI,WhoAmI,WhoAmI);
+            // DNS (Domain Name System)
+            string host = Dns.GetHostName();
+            IPHostEntry ipHost = Dns.GetHostEntry(host);
+            IPAddress ipAddr = ipHost.AddressList[0];
+            IPEndPoint endPoint = new IPEndPoint(ipAddr, 7777);
             
-            ThreadName.Dispose();
+            // 문지기
+            Socket listenSocket = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            
+            try
+            {
+                // 문지기 교육
+                listenSocket.Bind(endPoint);
+                
+                // 영업 시작
+                // backlog : 최대 대기수
+                listenSocket.Listen(10);
+                
+                while (true)
+                {
+                    Console.WriteLine("Listening...");
+                    
+                    // 손님을 입장시킨다
+                    Socket clientSocket = listenSocket.Accept(); // blocking -> 연결하기 전에 함수가 여기서 멈춤
+                    
+                    // 받는다
+                    byte[] recvBuff = new byte[1024];
+                    int recvBytes = clientSocket.Receive(recvBuff);
+                    string recvData = Encoding.UTF8.GetString(recvBuff, 0, recvBytes);
+                    Console.WriteLine($"[From Client] {recvData}");
+                    
+                    // 보낸다
+                    byte[] sendBuff = Encoding.UTF8.GetBytes("Welcome to MMORPG Server !");
+                    clientSocket.Send(sendBuff);
+                    
+                    // 쫓아낸다
+                    clientSocket.Shutdown(SocketShutdown.Both);
+                    clientSocket.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                throw;
+            }
+            
+            
         }
     }
 }
