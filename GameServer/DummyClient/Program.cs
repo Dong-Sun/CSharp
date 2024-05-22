@@ -24,10 +24,13 @@ namespace DummyClient
                     // 문지기한테 입장 문의
                     socket.Connect(endPoint);
                     Console.WriteLine($"Connected To {socket.RemoteEndPoint.ToString()}");
-                    
-                    // 보낸다
-                    byte[] sendBuff = Encoding.UTF8.GetBytes("Hello World");
-                    int sendBytes = socket.Send(sendBuff);
+                    for(int i = 0; i < 5; i++)
+                    {
+                        // 보낸다
+                        byte[] sendBuff = Encoding.UTF8.GetBytes($"Hello World {i}");
+                        int sendBytes = socket.Send(sendBuff);
+                        
+                    }
                     
                     // 받는다
                     byte[] recvBuff = new byte[1024];
